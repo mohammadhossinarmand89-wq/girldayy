@@ -1,0 +1,897 @@
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#120913">
+<title>برای هستی | روز دختر مبارک</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --pink: #ff78ad;
+    --light-pink: #ffc5dc;
+    --deep-pink: #ed367f;
+    --white: #fff5fa;
+    --dark: #120913;
+    --glass: rgba(255,255,255,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#sky {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: .15; transform: scale(.7); }
+    to { opacity: 1; transform: scale(1.4); }
+}
+
+#particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.particle {
+    position: absolute;
+    bottom: -40px;
+    animation: floatUp linear forwards;
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    10% { opacity: .9; }
+    90% { opacity: .8; }
+    100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+}
+
+.glow {
+    position: fixed;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(237,54,127,.13);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.glow.one { top: -100px; right: -100px; }
+.glow.two { bottom: -130px; left: -100px; }
+
+#app {
+    position: relative;
+    z-index: 1;
+}
+
+.page {
+    display: none;
+    min-height: 100svh;
+    padding: 45px 20px 110px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    animation: pageIn .7s ease both;
+}
+
+.page.active {
+    display: flex;
+}
+
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+    color: var(--pink);
+    letter-spacing: 2px;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: clamp(29px, 7vw, 54px);
+    line-height: 1.8;
+    font-weight: 800;
+    text-shadow: 0 0 30px rgba(255,120,173,.3);
+}
+
+h2 {
+    font-size: clamp(23px, 5vw, 35px);
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 2.2;
+}
+
+.subtitle {
+    max-width: 600px;
+    color: #f6dbe7;
+    font-size: 15px;
+    margin: 15px auto 25px;
+}
+
+.name {
+    color: var(--pink);
+    text-shadow: 0 0 25px rgba(255,120,173,.7);
+}
+
+.btn {
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 13px 25px;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #ff8fbc, #e72c7a);
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 8px 30px rgba(237,54,127,.22);
+    transition: .25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(237,54,127,.4);
+}
+
+.btn.secondary {
+    background: rgba(255,255,255,.07);
+    box-shadow: none;
+}
+
+.btn:active {
+    transform: scale(.97);
+}
+
+.navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px;
+    background: linear-gradient(transparent, rgba(18,9,19,.97) 25%);
+}
+
+#pageNumber {
+    font-size: 12px;
+    color: #e9c8d7;
+    min-width: 65px;
+}
+
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 12.5%;
+    background: var(--pink);
+    box-shadow: 0 0 12px var(--pink);
+    z-index: 30;
+    transition: width .4s;
+}
+
+.card {
+    width: min(100%, 540px);
+    padding: 27px 23px;
+    margin: 12px 0;
+    background: var(--glass);
+    border: 1px solid rgba(255,190,220,.18);
+    border-radius: 25px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 15px 45px rgba(0,0,0,.13);
+}
+
+.hero-heart {
+    font-size: 65px;
+    margin: 12px 0;
+    animation: heartbeat 1.5s infinite;
+    filter: drop-shadow(0 0 20px #ff5a9d);
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+}
+
+.tag {
+    display: inline-block;
+    margin: 5px;
+    padding: 9px 15px;
+    border: 1px solid rgba(255,150,195,.3);
+    border-radius: 30px;
+    color: #ffd4e5;
+    font-size: 13px;
+}
+
+.love-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 12px;
+    width: min(100%, 550px);
+    margin-top: 15px;
+}
+
+.love-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,140,185,.18);
+    padding: 23px 12px;
+    min-height: 125px;
+    border-radius: 20px;
+    color: white;
+    transition: .3s;
+}
+
+.love-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255,120,173,.13);
+}
+
+.love-card .icon {
+    display: block;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.love-card small {
+    display: block;
+    margin-top: 8px;
+    line-height: 1.9;
+    color: #ffd6e6;
+}
+
+.memory {
+    text-align: right;
+    border-right: 2px solid var(--pink);
+    border-radius: 0 15px 15px 0;
+    margin: 18px 0;
+    padding: 12px 18px;
+    background: rgba(255,255,255,.035);
+}
+
+.memory h3 {
+    font-size: 16px;
+    color: var(--pink);
+    margin-bottom: 6px;
+}
+
+.memory p {
+    color: #f4dce7;
+    font-size: 13px;
+}
+
+.envelope-wrap {
+    perspective: 800px;
+    margin: 35px auto;
+    width: min(290px, 85vw);
+    height: 180px;
+    position: relative;
+}
+
+.envelope {
+    position: absolute;
+    inset: 25px 0 0;
+    background: #e94888;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px #0005;
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #ff9fc4;
+    clip-path: polygon(0 0, 100% 0, 50% 62%);
+    transform-origin: top;
+    transition: transform .8s;
+    z-index: 3;
+}
+
+.envelope.open::before {
+    transform: rotateX(180deg);
+}
+
+.envelope::after {
+    content: "♥";
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    color: white;
+    z-index: 4;
+}
+
+.letter {
+    display: none;
+    width: min(100%, 540px);
+    text-align: right;
+    background: #fff0f6;
+    color: #65243e;
+    padding: 25px;
+    border-radius: 15px;
+    line-height: 2.3;
+    box-shadow: 0 15px 45px #0003;
+    animation: letterIn .7s ease both;
+}
+
+.letter.show {
+    display: block;
+}
+
+@keyframes letterIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.letter .signature {
+    margin-top: 20px;
+    color: #cf3473;
+    font-weight: 700;
+}
+
+.rose-stage {
+    width: 220px;
+    height: 300px;
+    position: relative;
+    margin: 15px auto;
+}
+
+.rose-stem {
+    position: absolute;
+    left: 108px;
+    top: 135px;
+    width: 5px;
+    height: 0;
+    background: linear-gradient(#72d58b, #287b4b);
+    border-radius: 8px;
+    transition: height 1.5s;
+}
+
+.rose-stage.bloomed .rose-stem {
+    height: 145px;
+}
+
+.leaf {
+    position: absolute;
+    left: 108px;
+    top: 210px;
+    width: 0;
+    height: 0;
+    background: #46b76c;
+    border-radius: 100% 0 100% 0;
+    transform: rotate(-25deg);
+    transition: all .8s .6s;
+}
+
+.leaf.l2 {
+    top: 245px;
+    transform: rotate(155deg);
+}
+
+.rose-stage.bloomed .leaf {
+    width: 43px;
+    height: 23px;
+}
+
+.rose-stage.bloomed .leaf.l2 {
+    left: 70px;
+}
+
+.rose-bud {
+    position: absolute;
+    top: 75px;
+    left: 78px;
+    width: 65px;
+    height: 75px;
+    background: radial-gradient(circle at 35% 30%, #ffb4d0, #f32670 70%);
+    border-radius: 50% 50% 45% 45%;
+    transform: scale(.25);
+    opacity: .2;
+    transition: all 1.3s;
+    box-shadow: 0 0 35px #f3267060;
+}
+
+.rose-stage.bloomed .rose-bud {
+    transform: scale(1.35);
+    opacity: 1;
+    border-radius: 60% 40% 60% 40%;
+}
+
+.rose-bud::before,
+.rose-bud::after {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 3px solid rgba(255,210,230,.6);
+    border-radius: 50%;
+    transform: rotate(30deg);
+}
+
+.rose-bud::after {
+    transform: rotate(-35deg);
+}
+
+.game-option {
+    width: 100%;
+    margin: 7px 0;
+    text-align: right;
+    padding: 15px;
+    border-radius: 15px;
+    color: white;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,140,185,.22);
+    font-size: 14px;
+    transition: .2s;
+}
+
+.game-option:hover {
+    background: rgba(255,120,173,.2);
+}
+
+#gameResult {
+    color: #ffc1db;
+    margin-top: 18px;
+    min-height: 60px;
+    font-size: 14px;
+}
+
+.final-heart {
+    font-size: 100px;
+    animation: heartbeat 1.5s infinite;
+    filter: drop-shadow(0 0 30px #ff438b);
+}
+
+.footer-note {
+    margin-top: 20px;
+    color: #b99eac;
+    font-size: 11px;
+}
+
+@media (max-width: 420px) {
+    .page { padding: 30px 16px 100px; }
+    .card { padding: 22px 17px; }
+    .love-grid { gap: 9px; }
+    .love-card { padding: 18px 8px; }
+    .btn { padding: 12px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="sky"></div>
+<div id="particles"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
+<div class="progress" id="progress"></div>
+
+<main id="app">
+
+<!-- PAGE 1 -->
+<section class="page active" data-page="1">
+    <div class="eyebrow">A LITTLE WORLD MADE FOR YOU</div>
+    <h1>این دنیا یه گوشه‌ی<br>قشنگ داره...</h1>
+    <div class="hero-heart">♡</div>
+    <h1 class="name">Hasti</h1>
+    <p class="subtitle">
+        و اون گوشه، امروز قراره فقط برای تو روشن بمونه.
+        <br>یه سورپرایز کوچیک از طرف یه نفر که بهت فکر کرده.
+    </p>
+    <button class="btn" onclick="goTo(2)">وارد دنیای من شو ♡</button>
+    <div class="footer-note">یک دنیای کوچک، برای یک آدم خاص</div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" data-page="2">
+    <div class="eyebrow">HAPPY GIRLS' DAY</div>
+    <div class="hero-heart">🌷</div>
+    <h1>روز دختر مبارک<br><span class="name">هستیِ من</span></h1>
+    <div class="card">
+        <p>
+            امروز بهونه‌ایه برای اینکه بهت بگم
+            بعضی آدم‌ها بدون اینکه خودشون بدونن،
+            با خندیدن و بودنشون دنیا رو برای یکی دیگه قشنگ‌تر می‌کنن.
+            <br>
+            <span class="name">تو برای من یکی از همون آدم‌هایی.</span>
+        </p>
+    </div>
+    <p class="subtitle">
+        امیدوارم دنیا همیشه به قشنگی لبخندی باشه که روی لبت می‌شینه.
+    </p>
+    <span class="tag">برای هستی</span>
+    <span class="tag">با کلی حس خوب</span>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page" data-page="3">
+    <div class="eyebrow">THINGS I LOVE ABOUT YOU</div>
+    <h2>می‌دونی چی تو رو خاص می‌کنه؟</h2>
+    <p class="subtitle">هر کدوم رو لمس کن؛ یه پیام کوچیک منتظرته.</p>
+
+    <div class="love-grid">
+        <button class="love-card" onclick="reveal(this, 'خنده‌هات یه جوریه که گاهی فقط یادآوریشون هم حالم رو بهتر می‌کنه.')">
+            <span class="icon">♡</span>
+            خنده‌هات
+            <small>یه حس خوب واقعی</small>
+        </button>
+
+        <button class="love-card" onclick="reveal(this, 'شیطنت‌هات از اون چیزهاییه که باعث می‌شه لحظه‌های معمولی هم خاطره بشن.')">
+            <span class="icon">✦</span>
+            شیطنت‌هات
+            <small>قسمت بامزه‌ی تو</small>
+        </button>
+
+        <button class="love-card" onclick="reveal(this, 'دوست دارم بتونی کنارم خودت باشی؛ بدون اینکه لازم باشه همیشه همه‌چیز کامل باشه.')">
+            <span class="icon">☁</span>
+            خودِ واقعی‌ت
+            <small>همون‌جوری که هستی</small>
+        </button>
+
+        <button class="love-card" onclick="reveal(this, 'گاهی یه حرف کوچیک یا چند دقیقه کنار هم بودن، بیشتر از چیزی که فکر کنی توی ذهنم می‌مونه.')">
+            <span class="icon">♡</span>
+            لحظه‌های ساده
+            <small>خاطره‌های دوست‌داشتنی</small>
+        </button>
+    </div>
+    <p id="revealText" class="subtitle" aria-live="polite"></p>
+</section>
+
+<!-- PAGE 4 -->
+<section class="page" data-page="4">
+    <div class="eyebrow">OUR LITTLE MEMORIES</div>
+    <h2>چند تکه از دنیای ما</h2>
+    <p class="subtitle">
+        بعضی خاطره‌ها شاید کوتاه باشن،
+        اما حسی که ازشون می‌مونه می‌تونه خیلی بیشتر طول بکشه.
+    </p>
+
+    <div class="card">
+        <div class="memory">
+            <h3>اولین لحظه‌های کنار هم</h3>
+            <p>گاهی چند دقیقه کنار یک نفر بودن، می‌تونه تا مدت‌ها لبخند به آدم هدیه بده.</p>
+        </div>
+
+        <div class="memory">
+            <h3>حرف‌هایی که یادمون می‌مونن</h3>
+            <p>از اون گفت‌وگوهایی که شاید ساده شروع می‌شن، ولی آخرش دلت نمی‌خواد تموم بشن.</p>
+        </div>
+
+        <div class="memory">
+            <h3>خنده‌های دونفره</h3>
+            <p>از اون لحظه‌هایی که حتی اگه موضوعش یادمون بره، حس خوبش یادمون می‌مونه.</p>
+        </div>
+
+        <p class="footer-note">
+            این خاطره‌ها فعلاً جای خالی دارن؛
+            بعداً می‌تونی جزئیات واقعی خودتون رو بهشون اضافه کنی.
+        </p>
+    </div>
+</section>
+
+<!-- PAGE 5 -->
+<section class="page" data-page="5">
+    <div class="eyebrow">A LETTER FOR HASTI</div>
+    <h2>یه نامه فقط برای تو</h2>
+    <p class="subtitle">روی پاکت بزن تا نامه باز بشه.</p>
+
+    <button class="envelope-wrap" onclick="openLetter()" aria-label="باز کردن نامه">
+        <div class="envelope" id="envelope"></div>
+    </button>
+
+    <div class="letter" id="letter">
+        هستی جان،
+        <br><br>
+        شاید نتونم همیشه همه‌ی حس‌هام رو اون‌جوری که باید بیان کنم،
+        اما این دلیل نمی‌شه که چیزهای قشنگی که توی دلم دارم وجود نداشته باشن.
+        <br><br>
+        دوست دارم بدونی که خنده‌هات، حرف زدنت و حتی شیطنت‌های کوچیکت
+        برام ارزش دارن. نمی‌خوام فقط توی روزهای خاص بهت بگم که برام مهمی؛
+        دوست دارم توی روزهای معمولی هم این حس رو از رفتارم بفهمی.
+        <br><br>
+        روز دخترت مبارک، دختر قشنگ قصه‌ی من.
+        امیدوارم همیشه برای خودت، برای آرزوهات و برای چیزهایی که دوست داری
+        دلیل‌های زیادی برای لبخند زدن داشته باشی.
+        <div class="signature">
+            از طرف محمدحسین<br>
+            برای هستی ♡
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page" data-page="6">
+    <div class="eyebrow">A ROSE FOR YOU</div>
+    <h2>این گل برای توئه</h2>
+    <p class="subtitle">
+        بعضی هدیه‌ها شاید واقعی نباشن،
+        ولی می‌شه با عشق ساختشون.
+    </p>
+
+    <div class="rose-stage" id="rose">
+        <div class="rose-stem"></div>
+        <div class="leaf"></div>
+        <div class="leaf l2"></div>
+        <div class="rose-bud"></div>
+    </div>
+
+    <button class="btn" onclick="bloomRose()">گل منو باز کن 🌹</button>
+    <p id="roseMessage" class="subtitle" aria-live="polite"></p>
+</section>
+
+<!-- PAGE 7 -->
+<section class="page" data-page="7">
+    <div class="eyebrow">A LITTLE GAME FOR YOU</div>
+    <h2>هستی خانوم، یه سؤال!</h2>
+    <div class="card">
+        <p>اگه قرار باشه یکی از اینا رو انتخاب کنی، کدوم رو برمی‌داری؟</p>
+        <br>
+
+        <button class="game-option" onclick="game(1)">
+            ۱. یه قرار ساده و کلی خنده
+        </button>
+
+        <button class="game-option" onclick="game(2)">
+            ۲. یه پیاده‌روی طولانی و حرف زدن
+        </button>
+
+        <button class="game-option" onclick="game(3)">
+            ۳. یه سورپرایز غیرمنتظره
+        </button>
+
+        <button class="game-option" onclick="game(4)">
+            ۴. فقط چند دقیقه کنار هم بودن
+        </button>
+
+        <p id="gameResult" aria-live="polite">
+            انتخابت رو بزن تا پیام مخصوصش رو ببینی.
+        </p>
+    </div>
+    <p class="subtitle">اینجا جواب اشتباه وجود نداره؛ مهم اینه که بهت خوش بگذره.</p>
+</section>
+
+<!-- PAGE 8 -->
+<section class="page" data-page="8">
+    <div class="eyebrow">MADE WITH LOVE</div>
+    <div class="final-heart">♥</div>
+    <h1>روزت مبارک<br><span class="name">هستیِ من</span></h1>
+
+    <div class="card">
+        <p>
+            امیدوارم هر روز بیشتر به آرزوهات نزدیک بشی،
+            خودت رو بیشتر دوست داشته باشی
+            و هیچ‌وقت یادت نره که برای خوشحال بودنت لازم نیست
+            منتظر یک روز خاص بمونی.
+            <br><br>
+            این سایت فقط یه هدیه‌ی کوچیکه؛
+            اما زمانی که براش گذاشتم، برای تو بود.
+        </p>
+    </div>
+
+    <h2 class="name">از طرف محمدحسین ♡</h2>
+    <p class="subtitle">برای دختری که بودنش، بخشی از قشنگی روزهای منه.</p>
+    <button class="btn" onclick="goTo(1)">دوباره از اول ببینیم؟</button>
+    <div class="footer-note">HASTI × MOHAMMAD HOSSEIN</div>
+</section>
+
+</main>
+
+<div class="navigation">
+    <button class="btn secondary" id="prevBtn" onclick="changePage(-1)">قبلی</button>
+    <span id="pageNumber">۱ از ۸</span>
+    <button class="btn" id="nextBtn" onclick="changePage(1)">بعدی ←</button>
+</div>
+
+<script>
+let currentPage = 1;
+const totalPages = 8;
+
+const pages = document.querySelectorAll('.page');
+const progress = document.getElementById('progress');
+const pageNumber = document.getElementById('pageNumber');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+const persianNumbers = ['۰','۱','۲','۳','۴','۵','۶','۷','۸'];
+
+function goTo(n) {
+    if (n < 1 || n > totalPages) return;
+
+    currentPage = n;
+
+    pages.forEach(page => {
+        page.classList.toggle('active', Number(page.dataset.page) === n);
+    });
+
+    progress.style.width = (n / totalPages * 100) + '%';
+    pageNumber.textContent = persianNumbers[n] + ' از ۸';
+
+    prevBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = n === totalPages ? 'hidden' : 'visible';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changePage(step) {
+    goTo(currentPage + step);
+}
+
+goTo(1);
+
+// Create stars
+const sky = document.getElementById('sky');
+
+for (let i = 0; i < 100; i++) {
+    const star = document.createElement('span');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    star.style.animationDuration = (1 + Math.random() * 3) + 's';
+
+    const size = Math.random() * 2.5 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+
+    sky.appendChild(star);
+}
+
+// Floating hearts and petals
+const particleBox = document.getElementById('particles');
+const symbols = ['♡', '♥', '✦', '✧', '🌸'];
+
+function createParticle() {
+    const particle = document.createElement('span');
+    particle.className = 'particle';
+    particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.fontSize = (10 + Math.random() * 18) + 'px';
+    particle.style.animationDuration = (7 + Math.random() * 8) + 's';
+    particle.style.color = ['#ff78ad', '#ffc5dc', '#ffffff'][Math.floor(Math.random() * 3)];
+
+    particleBox.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 16000);
+}
+
+setInterval(createParticle, 650);
+
+// Reveal cards
+function reveal(button, message) {
+    const output = document.getElementById('revealText');
+    output.textContent = message;
+    output.style.animation = 'none';
+    void output.offsetWidth;
+    output.style.animation = 'pageIn .5s ease both';
+
+    document.querySelectorAll('.love-card').forEach(card => {
+        card.style.borderColor = 'rgba(255,140,185,.18)';
+    });
+
+    button.style.borderColor = '#ff78ad';
+}
+
+// Open letter
+let letterOpened = false;
+
+function openLetter() {
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+
+    if (!letterOpened) {
+        envelope.classList.add('open');
+        letter.classList.add('show');
+        letterOpened = true;
+
+        setTimeout(() => {
+            letter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 250);
+    } else {
+        letter.classList.toggle('show');
+    }
+}
+
+// Bloom rose
+let roseBloomed = false;
+
+function bloomRose() {
+    const rose = document.getElementById('rose');
+    const message = document.getElementById('roseMessage');
+
+    rose.classList.toggle('bloomed');
+    roseBloomed = !roseBloomed;
+
+    if (roseBloomed) {
+        message.textContent = 'برای تو، هستی؛ چون بعضی آدم‌ها لایق قشنگ‌ترین چیزهای دنیان.';
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createParticle, i * 120);
+        }
+    } else {
+        message.textContent = 'هر وقت خواستی، دوباره شکوفاش کن.';
+    }
+}
+
+// Interactive game
+function game(choice) {
+    const messages = {
+        1: 'پس یه قرار پر از خنده! از اون روزهایی که دلمون نمی‌خواد زود تموم بشن. ♡',
+        2: 'حرف زدن با کسی که دوستش داری، می‌تونه مسیر رو هم قشنگ‌تر کنه. ✦',
+        3: 'پس باید یه سورپرایز بهتر برات آماده کنم! این یکی فقط شروعشه. 🌷',
+        4: 'گاهی چند دقیقه کنار هم بودن، از ساعت‌ها دور بودن قشنگ‌تره. ♥'
+    };
+
+    document.getElementById('gameResult').textContent = messages[choice];
+
+    for (let i = 0; i < 6; i++) {
+        setTimeout(createParticle, i * 180);
+    }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') changePage(1);
+    if (event.key === 'ArrowRight') changePage(-1);
+});
+</script>
+
+</body>
+</html>
+```
